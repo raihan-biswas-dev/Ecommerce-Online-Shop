@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+/* =====================Slick Slider=========================== */
+.slick-list,.slick-slider,.slick-track{position:relative;display:block}.slick-loading .slick-slide,.slick-loading .slick-track{visibility:hidden}.slick-slider{box-sizing:border-box;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none;-khtml-user-select:none;-ms-touch-action:pan-y;touch-action:pan-y;-webkit-tap-highlight-color:transparent}.slick-list{overflow:hidden;margin:0;padding:0}.slick-list:focus{outline:0}.slick-list.dragging{cursor:pointer;cursor:hand}.slick-slider .slick-list,.slick-slider .slick-track{-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);-o-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.slick-track{top:0;left:0}.slick-track:after,.slick-track:before{display:table;content:''}.slick-track:after{clear:both}.slick-slide{display:none;float:left;height:100%;min-height:1px}[dir=rtl] .slick-slide{float:right}.slick-slide img{display:block}.slick-slide.slick-loading img{display:none}.slick-slide.dragging img{pointer-events:none}.slick-initialized .slick-slide{display:block}.slick-vertical .slick-slide{display:block;height:auto;border:1px solid transparent}.slick-arrow.slick-hidden{display:none}/*# sourceMappingURL=slick.min.css.map */
+/* =====================Slick Slider=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header Part Start */
+
+.menu a {
+    color: #af4caa;
+    margin-left: 40px;
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+}
+
+.returnToShoppingBtn a {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+}
+
+/* .menu a:hover {
+    color: #fff;
+} */
+
+/* Dropdown Menu Start */
+
+.nav-item.dropdown {
+    margin-top: -8px;
+}
+
+a#nav-dropdown {
+    color: #af4caa;
+    font-family: "Roboto", sans-serif;
+}
+
+.dropdown-menu a {
+    margin-left: 0;
+}
+
+.dropdown-menu {
+    border: none !important;
+    padding: 0;
+}
+
+.menu .badge {
+    width: 21px;
+    height: 21px;
+}
+
+.mainDropdown {
+    width: 400px;
+    padding: 10px;
+}
+
+.dropdown-menu[data-bs-popper] {
+    top: 100%;
+    margin-top: 31px;
+    left: -213px;
+}
+
+.btn-primary {
+    color: #fff;
+    /* background-color: #0d6efd; */
+    /* border-color: #0d6efd; */
+}
+.gotoCartBtn,
+.checkoutBtn {
+    background: #4e7661 !important;
+}
+
+.gotoCartBtn:hover,
+.checkoutBtn:hover {
+    background: #000 !important;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+}
+
+/* Sider cart */
+
+.sideCart {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    z-index: 999;
+}
+
+/* Dropdown Menu end */
+
+.deleteBtn {
+    background: #4e7661;
+    color: #fff;
+}
+
+.deleteBtn:hover {
+    background: #000;
+    color: #fff;
+}
+
+.productBtn {
+    color: #fff;
+    background-color: #4e7661;
+    border-color: transparent !important;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: -51px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* btn add to cart */
+
+.btn-check:active + .btn-primary:focus,
+.btn-check:checked + .btn-primary:focus,
+.btn-primary.active:focus,
+.btn-primary:active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: none !important;
+}
+
+.btn-check:active + .btn-primary,
+.btn-check:checked + .btn-primary,
+.btn-primary.active,
+.btn-primary:active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #000000 !important;
+    border-color: transparent !important;
+}
+
+.outOfStokeBtn {
+    background: #000;
+}
+.outOfStokeBtn:hover{
+    background: #4e7661;
+}
+
+/* .btn-check:focus + .btn-primary,
+.btn-primary:focus {
+    color: #fff;
+    background-color: #000;
+    border-color: none !important;
+    box-shadow: none !important;
+} */
+
+.btn-check:focus + .btn-dark,
+.btn-dark:focus {
+    box-shadow: none !important;
+}
+
+/* .btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: none !important;
+} */
+
+/* .btn-primary:hover {
+    color: #fff;
+    background-color: #4e7661;
+    border-color: #4e7661;
+} */
+
+/* spinner Loading start */
+.loading {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* spinner Loading end */
+
+/* Header Part end */
+
+/* 
+
+
+font-family: 'Poppins', sans-serif;
+font-family: 'Roboto', sans-serif;
+
+*/
+
+/* rating Part end */
+.rating {
+    color: #4e7661;
+}
+/* rating Part Start */
+
+/* product inner css Part Start */
+.productHeading a {
+    color: #000000b3 !important;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.productDescription {
+    color: #353535;
+}
+
+.productPrice {
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+}
+
+.productModalMain h3,
+.product-main h3 {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+}
+.productModalMain h4,
+.product-main h4 {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+}
+.productModalMain .productModalDes,
+.ProductMainDes {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+}
+
+.modalAddToCartBtn{
+    color: #fff;
+    background: #000;
+    font-weight: 400;
+    font-size: 13px;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+}
+
+.modalAddToCartBtn:hover{
+    background: #4e7661;
+}
+/* product inner css Part end */
+
+/* Compare Product Part Start */
+.compareImg{
+    width: 50px;
+}
+/* Compare Product Part end */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Header Part Start */
+/* Header Part end */
+/* Header Part Start */
+/* Header Part end */
