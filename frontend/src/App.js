@@ -6,11 +6,15 @@ import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails";
 import CartPage from "./components/CartPage";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 import { useContext } from "react";
 import { FaTrash, FaShoppingCart } from 'react-icons/fa';
 import { Store } from "./Store";
 import Wishlist from "./components/Wishlist";
 import CompareProduct from "./components/CompareProduct";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Shipping from "./components/Shipping";
 
 function App() {
   const [show, setShow] = useState(false);
@@ -18,9 +22,11 @@ function App() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { state, state2, dispatch, dispatch2 } = useContext(Store)
+  const { state, state2, dispatch, dispatch2, state3, dispatch3 } = useContext(Store)
+
   const { cart: { cartItems } } = state
   const { wishlist: { wishlistItems } } = state2
+  const { userInfo } = state3
 
   let updateCart = (item, quantity) => {
     dispatch({
@@ -44,10 +50,16 @@ function App() {
     })
   }
 
+  let handleLogOut = () => {
+    dispatch3({ type: 'USER_LOGOUT' })
+    localStorage.removeItem('userInfo')
+  }
+
   return (
     <div>
       <BrowserRouter>
         <Navbar bg="light" className="sticky-lg-top" variant="light">
+          <ToastContainer position="bottom-center" limit={1} />
           <Container>
             <Navbar.Brand>
               <Link to='/'><img src="images/logo.png" height='50px' alt="" /></Link>
@@ -135,7 +147,20 @@ function App() {
                   {state2.wishlist.wishlistItems.length}
                 </Badge>
               )}
+              {userInfo ?
 
+                <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4" onClick={handleLogOut}>Log Out</NavDropdown.Item>
+                </NavDropdown>
+
+                :
+
+                <Link className="item" to="/signin">Sign In</Link>
+              }
               {/* =================================================================================================== */}
             </Nav>
           </Container>
@@ -175,8 +200,10 @@ function App() {
           <Route path="/products/:slug" element={<ProductDetails />} />
           <Route path="/cartpage" element={<CartPage />} />
           <Route path="/signin" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/compare" element={<CompareProduct />} />
+          <Route path="/shipping" element={<Shipping />} />
         </Routes>
       </BrowserRouter>
     </div>

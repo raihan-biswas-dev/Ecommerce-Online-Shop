@@ -7,8 +7,8 @@ import { Helmet } from "react-helmet-async";
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { Store } from "../Store";
 import Slider from "react-slick";
-import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, ListGroup, Badge, Button, Spinner, Alert } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Row, Col, Card, ListGroup, Badge, Button, Spinner, Alert, Form } from "react-bootstrap";
 import Rating from "./Rating";
 
 
@@ -50,6 +50,9 @@ export default function ProductDetails() {
     let params = useParams();
 
     const [relatedProduct, setRelatedProduct] = useState([])
+    const [couponText, setCouponText] = useState("")
+    const [errCoupon, setErrCoupon] = useState("")
+    const [discountPrice, setdDiscountPrice] = useState("")
 
     const [{ loading, err, product, productNotFoundErr }, dispatch] = useReducer(reducer, {
         loading: false,
@@ -108,9 +111,34 @@ export default function ProductDetails() {
 
         ctxDispatch({
             type: 'CART_ADD_ITEM',
-            payload: { ...product, quantity }
+            payload: { ...product, price: discountPrice ? discountPrice : product.price, quantity }
         })
         navigate(`/cartpage`);
+    }
+
+
+    let handleCouponText = (e) => {
+        setCouponText(e.target.value)
+    }
+
+    let handleCoupon = () => {
+
+        if (product.coupon !== "") {
+            if (product.coupon == couponText) {
+                let discountPrice = (product.price * product.discount) / 100
+                let afterDiscountProduct = product.price - discountPrice
+                if (afterDiscountProduct < product.discountLimit) {
+                    setErrCoupon("For this price discount not applicable")
+                } else {
+                    setdDiscountPrice(afterDiscountProduct)
+                }
+            } else {
+                setErrCoupon("Wrong coupon code")
+            }
+        } else {
+            setErrCoupon("Coupon not available")
+        }
+
     }
 
     return (
@@ -164,8 +192,19 @@ export default function ProductDetails() {
                                 <Col lg={3}>
                                     <ListGroup variant="flush">
                                         <ListGroup.Item><h3>Price</h3></ListGroup.Item>
-                                        <ListGroup.Item><h5>${product.price}</h5></ListGroup.Item>
                                         <ListGroup.Item>
+                                            <h4>${discountPrice ? <del>{product.price}</del> : product.price}</h4>
+                                        </ListGroup.Item>
+                                        <ListGroup.Item>
+                                            {discountPrice ? <h5>After discount : ${discountPrice}</h5> : ""}
+                                        </ListGroup.Item>
+                                        <ListGroup.Item>
+                                            <Form.Control onChange={handleCouponText} type="text" placeholder="Coupon code" />
+                                            <Form.Text id="passwordHelpBlock" muted>
+                                                {errCoupon}
+                                            </Form.Text>
+                                            <br />
+                                            <Button onClick={handleCoupon} className="me-3" variant="dark">Apply</Button>
                                             <Button onClick={handleAddToCart} variant="dark">Add To Cart</Button>
                                         </ListGroup.Item>
                                     </ListGroup>
@@ -184,14 +223,17 @@ export default function ProductDetails() {
                                 <Slider {...settings}>
 
                                     {
-                                        relatedProduct.map((item, i, arr) => (
+                                        relatedProduct.map(item => (
 
-                                            <Card style={{ width: '18rem' }}>
-                                                <Card.Img style={{ height: '250px' }} variant="top" src={item.img} />
+                                            <Card className="" style={{ width: '18rem' }}>
+                                                <Link to={`/products/${item.slug}`}>
+                                                    <Card.Img style={{ height: '250px' }} variant="top" src={item.img} />
+                                                </Link>
                                                 <Card.Body>
-                                                    {console.log(arr)}
                                                     <Card.Title>${item.price}</Card.Title>
-                                                    <Card.Title>{item.name}</Card.Title>
+                                                    <Card.Title>
+                                                        <Link to={`/products/${item.slug}`}>{item.name}</Link>
+                                                    </Card.Title>
                                                     <Button variant="primary">Add To Cart</Button>
                                                 </Card.Body>
                                             </Card>

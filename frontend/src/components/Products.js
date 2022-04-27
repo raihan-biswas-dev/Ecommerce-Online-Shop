@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useReducer, useContext } from "react";
-import { Container, Row, Col, Card, Button, Spinner, Modal } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Spinner, Modal, Badge, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { Store } from "../Store";
 import InnerImageZoom from "react-inner-image-zoom";
 import { FaHeart } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 import Rating from "./Rating";
 import { Helmet } from "react-helmet-async";
 
@@ -33,6 +33,9 @@ export default function Products() {
 
     const [lgShow, setLgShow] = useState(false);
     const [productDetails, setProductDetails] = useState({})
+    const [searchKeyWord, setSearchKeyWord] = useState("")
+    const [searchMetch, setSearchMetch] = useState("")
+    const [searchProduct, setSearchProduct] = useState([])
 
     const [{ loading, err, product }, dispatch] = useReducer(reducer, {
         loading: false,
@@ -92,12 +95,18 @@ export default function Products() {
     }
 
 
-
+    // Search function===================
+    // let handleSearch = (e) => {
+    //     setSearchKeyWord(e.target.value)
+    //     let a = product.filter(item => item.name.includes(e.target.value))
+    //     setSearchProduct(a)
+    //     console.log(a)
+    // }
+    // Search function===================
 
 
 
     // =====================Wish List Part====================
-
 
     return (
         <div>
@@ -106,53 +115,66 @@ export default function Products() {
                     <title>Product</title>
                 </Helmet>
                 <Row>
+                    <Form.Control onChange={(e) => setSearchMetch(e.target.value)} type="text" placeholder="find your product" />
                     {loading ?
                         <div className="loading">
                             <Spinner animation="grow" variant="success" />
                         </div>
                         :
-                        product.map(item => (
-                            <Col lg={3}>
-                                <Card className="mt-5 text-center">
 
-                                    <div style={{ cursor: "pointer" }} onClick={() => handleDetails(item.slug)}>
-                                        <Card.Img variant="top" src={item.img} />
-                                    </div>
+                        product.filter((item) => {
+                            if (searchMetch == "") {
+                                return item
+                            } else if (item.name.toLowerCase().includes(searchMetch.toLocaleLowerCase())) {
+                                return item
+                            }
+                        })
+                            .map(item => (
+                                <Col lg={3}>
+                                    <Card className="mt-5 text-center">
+
+                                        <div style={{ cursor: "pointer" }} onClick={() => handleDetails(item.slug)}>
+                                            <Card.Img variant="top" src={item.img} />
+                                        </div>
 
 
-                                    <Card.Body>
-                                        <Card.Title className="productHeading">
-                                            <Link to={`/products/${item.slug}`}>{item.name} {item.category}</Link>
-                                        </Card.Title>
-                                        <Rating rating={item.rating} numberOfRating={item.numberOfRating} />
-                                        <Card.Title className="productPrice">${item.price}</Card.Title>
-                                    </Card.Body>
-                                    <Card.Body>
-                                        {item.stoke == 0 ?
+                                        <Card.Body>
+                                            <Card.Title className="productHeading">
+                                                <Link to={`/products/${item.slug}`}>{item.name}
 
-                                            <>
-                                                <Button size="sm" className="me-2" onClick={() => handleAddToCart(item)} variant="dark outOfStokeBtn productBtn">Out Of Stoke</Button>
-                                                <Button size="sm" className="" onClick={() => handleDetails(item.slug)} variant="primary productBtn" >Details</Button>
-                                                <Button size="sm" onClick={() => handleAddToWishList(item)} className="ms-2" variant="primary productBtn" ><FaHeart /></Button>
+                                                    {item.totalSell > 50 ? <Badge bg="success"> Best seller</Badge> : ""}
 
-                                            </>
-                                            :
-                                            <>
-                                                <Button size="sm" className="me-2" onClick={() => handleAddToCart(item)} variant="primary productBtn">Add To Cart</Button>
-                                                <Button size="sm" className="" onClick={() => handleDetails(item.slug)} variant="primary productBtn" >Details</Button>
-                                                <Button size="sm" className="ms-2" onClick={() => handleAddToWishList(item)} variant="primary productBtn" ><FaHeart /></Button>
+                                                </Link>
+                                            </Card.Title>
+                                            <Rating rating={item.rating} numberOfRating={item.numberOfRating} />
+                                            <Card.Title className="productPrice">${item.price}</Card.Title>
+                                        </Card.Body>
+                                        <Card.Body>
+                                            {item.stoke == 0 ?
 
-                                            </>
-                                        }
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        ))
+                                                <>
+                                                    <Button size="sm" className="me-2" onClick={() => handleAddToCart(item)} variant="dark outOfStokeBtn productBtn">Out Of Stoke</Button>
+                                                    <Button size="sm" className="" onClick={() => handleDetails(item.slug)} variant="primary productBtn" >Details</Button>
+                                                    <Button size="sm" onClick={() => handleAddToWishList(item)} className="ms-2" variant="primary productBtn" ><FaHeart /></Button>
+
+                                                </>
+                                                :
+                                                <>
+                                                    <Button size="sm" className="me-2" onClick={() => handleAddToCart(item)} variant="primary productBtn">Add To Cart</Button>
+                                                    <Button size="sm" className="" onClick={() => handleDetails(item.slug)} variant="primary productBtn" >Details</Button>
+                                                    <Button size="sm" className="ms-2" onClick={() => handleAddToWishList(item)} variant="primary productBtn" ><FaHeart /></Button>
+
+                                                </>
+                                            }
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))
                     }
                 </Row>
 
                 {/* product modal */}
-                <Modal
+                <Modal className=""
                     size="lg"
                     show={lgShow}
                     onHide={() => setLgShow(false)}
@@ -166,7 +188,7 @@ export default function Products() {
                     <Modal.Body className="productModalMain">
                         {
                             productDetails ?
-                                <Card>
+                                <Card className="">
                                     <Row>
                                         <Col lg={6}>
                                             <InnerImageZoom src={productDetails.img} zoomScale={2} zoomSrc={productDetails.img} alt={productDetails.name} />
@@ -198,3 +220,12 @@ export default function Products() {
         </div>
     )
 }
+
+
+
+
+
+
+
+
+
